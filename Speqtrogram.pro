@@ -13,8 +13,13 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    devicelist.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h\
+        portaudio.h \
+    devicelist.h
 
 FORMS    += mainwindow.ui
+
+LIBS     += -lportaudio
