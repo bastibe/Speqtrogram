@@ -10,6 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Speqtrogram
 TEMPLATE = app
+win32:INCLUDEPATH += "C:/bin"
 
 
 SOURCES += main.cpp\
@@ -22,4 +23,5 @@ HEADERS  += mainwindow.h\
 
 FORMS    += mainwindow.ui
 
-LIBS     += -lportaudio
+unix:LIBS     += -lportaudio
+win32:LIBS    += c:/bin/portaudio_x86.dll
