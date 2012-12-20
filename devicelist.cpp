@@ -26,8 +26,9 @@ int DeviceList::rowCount(const QModelIndex &parent) const
 
 QVariant DeviceList::data(const QModelIndex &index, int role) const
 {
-    if(role == Qt::DisplayRole)
-        return QVariant(Pa_GetDeviceInfo(index.row())->name);
-    else
+    if(role == Qt::DisplayRole) {
+        const PaDeviceInfo *info = Pa_GetDeviceInfo(index.row());
+        return QVariant(QString("%2: %1").arg(info->name).arg(Pa_GetHostApiInfo(info->hostApi)->name));
+    } else
         return QVariant();
 }
