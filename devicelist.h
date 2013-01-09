@@ -2,6 +2,7 @@
 #define DEVICELIST_H
 
 #include <QAbstractListModel>
+#include <portaudio.h>
 
 class DeviceList : public QAbstractListModel
 {
@@ -15,6 +16,10 @@ public:
 signals:
     
 public slots:
+    void updateHostApi(int selectedApi);
+
+private:
+    PaHostApiIndex currentHostApi;
     
 };
 

@@ -15,11 +15,13 @@ win32:INCLUDEPATH += "C:/bin"
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    devicelist.cpp
+    devicelist.cpp \
+    hostapilist.cpp
 
 HEADERS  += mainwindow.h\
         portaudio.h \
-    devicelist.h
+    devicelist.h \
+    hostapilist.h
 
 FORMS    += mainwindow.ui
 
