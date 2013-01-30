@@ -3,6 +3,8 @@
 #include "ui_mainwindow.h"
 #include "devicelist.h"
 #include "hostapilist.h"
+#include <QFileDialog>
+#include <QFileInfo>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -11,7 +13,6 @@ MainWindow::MainWindow(QWidget *parent) :
     Pa_Initialize();
 
     ui->setupUi(this);
-    ui->pushme->setText("Push me!");
     ui->hostApiList->setModel(new HostApiList());
     ui->deviceList->setModel(new DeviceList());
 
@@ -25,6 +26,21 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->hostApiList, SIGNAL(currentIndexChanged(int)),
             ui->deviceList->model(), SLOT(updateHostApi(int)) );
+
+    ui->playButton->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+    ui->rewindButton->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekBackward));
+    ui->fastForwardButton->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekForward));
+
+    QAction* openAction = new QAction(qApp->style()->standardIcon(QStyle::SP_DirOpenIcon), tr("&Open..."), this);
+    openAction->setShortcuts(QKeySequence::Open);
+    openAction->setStatusTip(tr("Open a sound file"));
+    connect(openAction, SIGNAL(triggered()), this, SLOT(open()));
+
+    QMenu* fileMenu = menuBar()->addMenu(tr("&File"));
+    fileMenu->addAction(openAction);
+    ui->mainToolBar->addAction(openAction);
+
+    QDir::setCurrent(QDir::homePath());
 }
 
 MainWindow::~MainWindow()
@@ -32,4 +48,12 @@ MainWindow::~MainWindow()
     delete ui;
 
     Pa_Terminate();
+}
+
+void MainWindow::open()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Sound File"),
+                                                    QDir::currentPath(),
+                                                    tr("Sound Files (*.wav *.flac *.aiff *.ogg)"));
+    QDir::setCurrent(QFileInfo(fileName).absolutePath());
 }
