@@ -16,14 +16,16 @@ win32:INCLUDEPATH += "C:/bin"
 SOURCES += main.cpp\
         mainwindow.cpp \
     devicelist.cpp \
-    hostapilist.cpp
+    hostapilist.cpp \
+    paplayback.cpp
 
 HEADERS  += mainwindow.h\
         portaudio.h \
     devicelist.h \
-    hostapilist.h
+    hostapilist.h \
+    paplayback.h
 
 FORMS    += mainwindow.ui
 
 unix:LIBS     += -lportaudio
-win32:LIBS    += c:/bin/portaudio_x86.dll
+win32:LIBS    += c:/bin/portaudio_x86.dll c:/bin/libsndfile-1.dll
