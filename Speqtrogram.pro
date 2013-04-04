@@ -27,5 +27,5 @@ HEADERS  += mainwindow.h\
 
 FORMS    += mainwindow.ui
 
-unix:LIBS     += -lportaudio
+unix:LIBS     += -lportaudio -lsndfile
 win32:LIBS    += c:/bin/portaudio_x86.dll c:/bin/libsndfile-1.dll
