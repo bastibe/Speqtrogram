@@ -1,4 +1,3 @@
-#include <portaudio.h>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "devicelist.h"
@@ -10,8 +9,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    Pa_Initialize();
-
     ui->setupUi(this);
     ui->hostApiList->setModel(new HostApiList());
     ui->deviceList->setModel(new DeviceList());
@@ -32,8 +29,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->deviceList->setCurrentIndex(Pa_GetDefaultOutputDevice()-first_device);
 
     ui->playButton->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+    connect(ui->playButton, SIGNAL(clicked()), &player, SLOT(playPause()));
+    connect(&player, SIGNAL(isPlaying(bool)), this, SLOT(changePlayButtonState(bool)));
     ui->rewindButton->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekBackward));
+    connect(ui->rewindButton, SIGNAL(clicked()), &player, SLOT(rewind()));
     ui->fastForwardButton->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekForward));
+    connect(ui->fastForwardButton, SIGNAL(clicked()), &player, SLOT(fastForward()));
 
     QAction* openAction = new QAction(qApp->style()->standardIcon(QStyle::SP_DirOpenIcon), tr("&Open..."), this);
     openAction->setShortcuts(QKeySequence::Open);
@@ -50,8 +51,6 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-
-    Pa_Terminate();
 }
 
 void MainWindow::open()
@@ -61,4 +60,10 @@ void MainWindow::open()
                                                     tr("Sound Files (*.wav *.flac *.aiff *.ogg)"));
     QDir::setCurrent(QFileInfo(fileName).absolutePath());
     player.openSoundFile(fileName.toStdString());
+}
+
+void MainWindow::changePlayButtonState(bool isPlaying)
+{
+    ui->playButton->setIcon(isPlaying ? qApp->style()->standardIcon(QStyle::SP_MediaPause) :
+                                        qApp->style()->standardIcon(QStyle::SP_MediaPlay));
 }

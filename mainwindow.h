@@ -22,6 +22,7 @@ private:
 
 public slots:
     void open();
+    void changePlayButtonState(bool isPlaying);
 };
 
 #endif // MAINWINDOW_H
