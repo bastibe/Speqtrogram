@@ -17,13 +17,15 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     devicelist.cpp \
     hostapilist.cpp \
-    paplayback.cpp
+    paplayback.cpp \
+    waveformwidget.cpp
 
 HEADERS  += mainwindow.h\
         portaudio.h \
     devicelist.h \
     hostapilist.h \
-    paplayback.h
+    paplayback.h \
+    waveformwidget.h
 
 FORMS    += mainwindow.ui
 

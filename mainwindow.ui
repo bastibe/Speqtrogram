@@ -39,7 +39,7 @@
      </layout>
     </item>
     <item>
-     <widget class="QGraphicsView" name="waveformNavigator"/>
+     <widget class="WaveformWidget" name="waveformView" native="true"/>
     </item>
     <item>
      <widget class="QWidget" name="spectrogram" native="true"/>
@@ -135,6 +135,14 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>WaveformWidget</class>
+   <extends>QWidget</extends>
+   <header>waveformwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
